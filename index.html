@@ -12,6 +12,17 @@
             background-color: #ffe6cc;
             text-align: center; /* Centraliza o texto da página */
         }
+        header {
+        padding-top: 10px;
+            
+        }
+        header img {
+            width: 72px;
+            position: fixed;
+            left: 0px;
+            top: 3px;
+        }
+    
         .container {
             max-width: 800px;
             margin: auto;
@@ -60,6 +71,9 @@
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: 900;
         }
         .product-actions button:hover {
             background-color: #e67e22;
@@ -78,6 +92,7 @@
         .bag ul {
             list-style-type: none;
             padding: 0;
+            text-align: end;
         }
         .bag ul li {
             margin-bottom: 10px;
@@ -128,6 +143,31 @@
             align-items: center;
             justify-content: space-around;
         }
+        .button-remover {
+            background-color: red;
+            color: white;
+            border: none;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: 900;
+            
+        }
+        .container h6 {
+            margin: 0;
+            padding-bottom: 60px;
+            padding-top: 10px;
+            letter-spacing: 1px;
+        }
+        mark {
+            padding: 1px 10px;
+            border-radius: 5px;
+            color: white;
+            background-color: #d35400;
+            margin: 2px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 20px;
+        }
         @media (max-width: 600px) {
             .product {
                 flex-direction: column;
@@ -140,9 +180,7 @@
 </head>
 <body>
     <header>
-        <img src="" alt="">
-        
-        <h3>Palet's Burger</h3>
+        <img src="baixados.png" alt="">
     </header>
     <div class="container">
         <h1>Cardápio Digital</h1>
@@ -205,8 +243,9 @@
             </select>
             
 
-            <button type="button" onclick="sendOrder()">Enviar Pedido via WhatsApp</button>
+            <button type="button" onclick="sendOrder()">Enviar Pedido</button>
         </form>
+        <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark></h6>
     </div>
     <footer>
         <p>Total: R$ <span id="total-price">0.00</span></p>
@@ -291,7 +330,7 @@
                 const li = document.createElement('li');
                 li.innerHTML = `
                     ${item.name} - R$ ${item.price.toFixed(2)}
-                    <button onclick="removeFromBag(${index})">Remover</button>
+                    <button class="button-remover" onclick="removeFromBag(${index})">Remover</button>
                 `;
                 bagItems.appendChild(li);
             });
@@ -324,7 +363,7 @@
                 *Total: R$* ${totalPrice.toFixed(2)}  *+* *Bairro:* ${customerBairro}
             `;
 
-            const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)}`;
+            const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)},`;
             window.open(whatsappLink, '_blank');
         }
 
