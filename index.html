@@ -17,10 +17,23 @@
             
         }
         header img {
-            width: 72px;
+            width: 68px;
             position: fixed;
             left: 0px;
             top: 3px;
+        }
+        #price-fixed {
+            font-size: 12px;
+            position: fixed;
+            right: 5px;
+            top: -7px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            background-color: #fe77009e;
+            border-radius: 5px;
+            padding: 2px;
+            color: white;
+            text-shadow: 0px 1px 2px black;
         }
     
         .container {
@@ -76,7 +89,7 @@
             font-weight: 900;
         }
         .product-actions button:hover {
-            background-color: #e67e22;
+            background-color: #fe7700;
         }
         .bag {
             background: #fff;
@@ -176,11 +189,13 @@
                 margin-top: 10px;
             }
         }
+  
     </style>
 </head>
 <body>
     <header>
         <img src="baixados.png" alt="">
+        <p id="price-fixed">Valor total R$ <span id="total-price">0.00</span> <mark>Palet's Burger</mark></p>
     </header>
     <div class="container">
         <h1>Cardápio Digital</h1>
@@ -204,7 +219,7 @@
             <label for="customer-number">Número</label>
             <input type="text" id="customer-number" placeholder="Número da residência" required>
 
-            <label for="customer-bairro">Bairro</label>
+            <label for="customer-bairro">Bairro & Entrega</label>
             <select id="customer-bairro" required onchange="updateBairroPrice()">
                 <option value="Centro-6.00">Centro - R$ 6,00</option>
                 <option value="Vila louro-6.00">Vila Louro - R$ 6,00</option>
@@ -238,7 +253,7 @@
                 <option value="Recanto lagoa-12.00">Recanto Lagoa - R$ 12,00</option>
                 <option value="Recanto das vertentes-18.00">Recanto das Vertentes - R$ 18,00</option>
                 <option value="Vale florido-20.00">Vale Florido - R$ 20,00</option>
-                <option value="Santa Rita-35.00">Santa Rita - R$ 35,00</option>
+                <option value="Santa Rita-40.00">Santa Rita - R$ 40,00</option>
                 <option value="Penteado-35.00">Penteado - R$ 35,00</option>
             </select>
             
@@ -248,9 +263,8 @@
         <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark></h6>
     </div>
     <footer>
-        <p>Total: R$ <span id="total-price">0.00</span></p>
         <a href="#sacola">Sacola</a>
-
+        <a href="#order-form">Finalizar pedido</a>
     </footer>
 
     <script>
@@ -263,8 +277,8 @@
                 { name: "Combo 1", description: "Cheeseburger, batata e refrigerante", discount: 3, price: 20, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
             ],
             "Bebidas": [
-                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" },
-                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
+                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5.22, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" },
+                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5.45, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
                 
             ]
         };
