@@ -1,201 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Cardápio Digital</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffe6cc;
-            text-align: center; /* Centraliza o texto da página */
-        }
-        header {
-        padding-top: 10px;
-            
-        }
-        header img {
-            width: 68px;
-            position: fixed;
-            left: 0px;
-            top: 3px;
-        }
-        #price-fixed {
-            font-size: 12px;
-            position: fixed;
-            right: 5px;
-            top: -7px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            background-color: #fe77009e;
-            border-radius: 5px;
-            padding: 2px;
-            color: white;
-            text-shadow: 0px 1px 2px black;
-        }
-    
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-        h1 {
-            color: #d35400;
-            margin-bottom: 20px;
-        }
-        .section h2 {
-            color: #e67e22;
-            margin-bottom: 10px;
-        }
-        .product {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .product img {
-            margin-bottom: 10px;
-            border-radius: 10px;
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            margin-right: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto; /* Centraliza as imagens */
-        }
-        .product-details h3 {
-            margin: 0;
-            color: #d35400;
-        }
-        .product-details p {
-            margin: 5px 0;
-        }
-        .product-actions button {
-            background-color: #d35400;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            height: 40px;
-            border-radius: 8px;
-            font-weight: 900;
-        }
-        .product-actions button:hover {
-            background-color: #fe7700;
-        }
-        .bag {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        .bag h2 {
-            margin-top: 0;
-            color: #d35400;
-        }
-        .bag ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: end;
-        }
-        .bag ul li {
-            margin-bottom: 10px;
-        }
-        .bag ul li button {
-            margin-left: 10px;
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        form input, form select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        form button {
-            background-color: #d35400;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 50px;
-        }
-        form button:hover {
-            background-color: #e67e22;
-        }
-        footer {
-            position: fixed;
-            background-color: rgb(255, 123, 0);
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-        }
-        .button-remover {
-            background-color: red;
-            color: white;
-            border: none;
-            height: 40px;
-            border-radius: 8px;
-            font-weight: 900;
-            
-        }
-        .container h6 {
-            margin: 0;
-            padding-bottom: 60px;
-            padding-top: 10px;
-            letter-spacing: 1px;
-        }
-        mark {
-            padding: 1px 10px;
-            border-radius: 5px;
-            color: white;
-            background-color: #d35400;
-            margin: 2px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            line-height: 20px;
-        }
-        @media (max-width: 600px) {
-            .product {
-                flex-direction: column;
-            }
-            .product-actions {
-                margin-top: 10px;
-            }
-        }
-  
-    </style>
 </head>
+
 <body>
     <header>
-        <img src="baixados.png" alt="">
-        <p id="price-fixed">Valor total R$ <span id="total-price">0.00</span> <mark>Palet's Burger</mark></p>
+        <p id="price-fixed">Valor total R$ <span id="total-price">0,00</span> <mark>Palet's Burger</mark></p>
     </header>
     <div class="container">
         <h1>Cardápio Digital</h1>
@@ -205,10 +20,9 @@
         <div class="bag">
             <h2 id="sacola">Sua Sacola</h2>
             <ul id="bag-items"></ul>
-            
         </div>
 
-        <form id="order-form">
+        <form id="order-form" onsubmit="return validateForm()">
             <h2>Finalizar Pedido</h2>
             <label for="customer-name">Nome</label>
             <input type="text" id="customer-name" placeholder="Seu nome" required>
@@ -219,48 +33,64 @@
             <label for="customer-number">Número</label>
             <input type="text" id="customer-number" placeholder="Número da residência" required>
 
-            <label for="customer-bairro">Bairro & Entrega</label>
-            <select id="customer-bairro" required onchange="updateBairroPrice()">
-                <option value="Centro-6.00">Centro - R$ 6,00</option>
-                <option value="Vila louro-6.00">Vila Louro - R$ 6,00</option>
-                <option value="Jd boa vista-6.00">Jd Boa Vista - R$ 6,00</option>
-                <option value="Jd São Paulo-6.00">Jd São Paulo - R$ 6,00</option>
-                <option value="Jd Madalena-6.00">Jd Madalena - R$ 6,00</option>
-                <option value="Jd Brasil-6.00">Jd Brasil - R$ 6,00</option>
-                <option value="Florida 1-8.00">Florida 1 - R$ 8,00</option>
-                <option value="Florida 2-9.00">Florida 2 - R$ 9,00</option>
-                <option value="Filipinho-8.00">Filipinho - R$ 8,00</option>
-                <option value="Vila Cristina-9.00">Vila Cristina - R$ 9,00</option>
-                <option value="Valflor-10.00">Valflor - R$ 10,00</option>
-                <option value="Portaria 1-10.00">Portaria 1 - R$ 10,00</option>
-                <option value="Portaria 2-15.00">Portaria 2 - R$ 15,00</option>
-                <option value="Chácara Nunes-10.00">Chácara Nunes - R$ 10,00</option>
-                <option value="Jd São José-10.00">Jd São José - R$ 10,00</option>
-                <option value="Holanda-15.00">Holanda - R$ 15,00</option>
-                <option value="Paulistinha-18.00">Paulistinha - R$ 18,00</option>
-                <option value="Califórnia-25.00">Califórnia - R$ 25,00</option>
-                <option value="Pq imperial-25.00">Pq Imperial - R$ 25,00</option>
-                <option value="Santa Izabel-15.00">Santa Izabel - R$ 15,00</option>
-                <option value="Granjinha-14.00">Granjinha - R$ 14,00</option>
-                <option value="Bonanza-12.00">Bonanza - R$ 12,00</option>
-                <option value="Cipó-15.00">Cipó - R$ 15,00</option>
-                <option value="Cipó campestre-18.00">Cipó Campestre - R$ 18,00</option>
-                <option value="Vila Dirce-15.00">Vila Dirce - R$ 15,00</option>
-                <option value="Santa fé-15.00">Santa Fé - R$ 15,00</option>
-                <option value="Congonhal-25.00">Congonhal - R$ 25,00</option>
-                <option value="Sapateiro-20.00">Sapateiro - R$ 20,00</option>
-                <option value="Lagoa grande-18.00">Lagoa Grande - R$ 18,00</option>
-                <option value="Recanto lagoa-12.00">Recanto Lagoa - R$ 12,00</option>
-                <option value="Recanto das vertentes-18.00">Recanto das Vertentes - R$ 18,00</option>
-                <option value="Vale florido-20.00">Vale Florido - R$ 20,00</option>
-                <option value="Santa Rita-40.00">Santa Rita - R$ 40,00</option>
-                <option value="Penteado-35.00">Penteado - R$ 35,00</option>
-            </select>
-            
+            <div>
+                <label>
+                    <input type="checkbox" name="payment-option" value="Cartão Crédito/Débito">
+                    Cartão Crédito/Débito
+                </label>
+                <label>
+                    <input type="checkbox" name="payment-option" value="debito">
+                    Pix
+                </label>
+            </div>
 
-            <button type="button" onclick="sendOrder()">Enviar Pedido</button>
+            <label for="customer-bairro">Bairro e taxa entrega</label>
+            <select id="customer-bairro" required onchange="updateBairroPrice()">
+                <option value="Centro-6,00">Centro - R$ 6,00</option>
+                <option value="Vila louro-6,00">Vila Louro - R$ 6,00</option>
+                <option value="Jd boa vista-6,00">Jd Boa Vista - R$ 6,00</option>
+                <option value="Jd São Paulo-6,00">Jd São Paulo - R$ 6,00</option>
+                <option value="Jd Madalena-6,00">Jd Madalena - R$ 6,00</option>
+                <option value="Jd Brasil-6,00">Jd Brasil - R$ 6,00</option>
+                <option value="Florida 1-8,00">Florida 1 - R$ 8,00</option>
+                <option value="Florida 2-9,00">Florida 2 - R$ 9,00</option>
+                <option value="Filipinho-8,00">Filipinho - R$ 8,00</option>
+                <option value="Vila Cristina-9,00">Vila Cristina - R$ 9,00</option>
+                <option value="Valflor-10,00">Valflor - R$ 10,00</option>
+                <option value="Portaria 1-10,00">Portaria 1 - R$ 10,00</option>
+                <option value="Portaria 2-15,00">Portaria 2 - R$ 15,00</option>
+                <option value="Chácara Nunes-10,00">Chácara Nunes - R$ 10,00</option>
+                <option value="Jd São José-10,00">Jd São José - R$ 10,00</option>
+                <option value="Holanda-15,00">Holanda - R$ 15,00</option>
+                <option value="Paulistinha-18,00">Paulistinha - R$ 18,00</option>
+                <option value="Califórnia-25,00">Califórnia - R$ 25,00</option>
+                <option value="Pq imperial-25,00">Pq Imperial - R$ 25,00</option>
+                <option value="Santa Izabel-15,00">Santa Izabel - R$ 15,00</option>
+                <option value="Granjinha-14,00">Granjinha - R$ 14,00</option>
+                <option value="Bonanza-12,00">Bonanza - R$ 12,00</option>
+                <option value="Cipó-15,00">Cipó - R$ 15,00</option>
+                <option value="Cipó campestre-18,00">Cipó Campestre - R$ 18,00</option>
+                <option value="Vila Dirce-15,00">Vila Dirce - R$ 15,00</option>
+                <option value="Santa fé-15,00">Santa Fé - R$ 15,00</option>
+                <option value="Congonhal-25,00">Congonhal - R$ 25,00</option>
+                <option value="Sapateiro-20,00">Sapateiro - R$ 20,00</option>
+                <option value="Lagoa grande-18,00">Lagoa Grande - R$ 18,00</option>
+                <option value="Recanto lagoa-12,00">Recanto Lagoa - R$ 12,00</option>
+                <option value="Recanto das vertentes-18,00">Recanto das Vertentes - R$ 18,00</option>
+                <option value="Vale florido-20,00">Vale Florido - R$ 20,00</option>
+                <option value="Santa Rita-40,00">Santa Rita - R$ 40,00</option>
+                <option value="Penteado-35,00">Penteado - R$ 35,00</option>
+            </select>
+
+            <label for="troco">Precisa de troco?</label>
+            <input type="checkbox" id="troco" onchange="toggleTrocoInput()">
+            <input type="number" id="troco-valor" placeholder="Valor para troco" style="display:none;">
+
+            <button type="submit">Enviar Pedido</button>
         </form>
-        <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark></h6>
+        <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark>
+        <a href="admin.html">Adm.</a></h6>
+        <img src="" alt="">
     </div>
     <footer>
         <a href="#sacola">Sacola</a>
@@ -270,17 +100,95 @@
     <script>
         const menuData = {
             "Hambúrgueres": [
-                { name: "Bacon", description: "Pão brioche, carne, queijo prato, bacon fatiado e creme de queijo", discount: 2, price: 12, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" },
-                { name: "Bacon Burger", description: "Pão, carne, queijo e bacon", discount: 1, price: 15, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
+                {
+                    name: "Bacon",
+                    description: "Pão brioche, carne, queijo prato, bacon fatiado e creme de queijo.",
+                    discount: 0,
+                    price: 23.00,
+                    image: "assets/imagens/bacon-hamburguer-imagem.jpeg"
+                },
+
+                {
+                    name: "Palets", description: "Pão brioche, carne, queijo coalho, rúcula, maionese de alho e cebola roxa.",
+                    discount: 0,
+                    price: 30,
+                    image: "assets/imagens/palets-hamburguer-imagem.jpeg"
+                },
+
+                {
+                    name: "Esquina",
+                    description: "Pão brioche, carne, fatia de cheddar, picles, cebola picada, mostarda e ketchup.",
+                    discount: 0,
+                    price: 26,
+                    image: "assets/imagens/esquina-hamburguer-imagem.jpeg"
+                },
+
+                {
+                    name: "Costela",
+                    description: "Pão brioche, carne, queijo queijo prato, alface, tomate, farofa de bacon, maionese e cebola crispy.",
+                    discount: 0,
+                    price: 28,
+                    image: "assets/imagens/costela-hamburguer-imagem.jpeg"
+                },
+
+                {
+                    name: "Fitness",
+                    description: "Pão brioche, carne, queijo prato, alface, tomate, cebola roxa e molho tasty.",
+                    discount: 0,
+                    price: 24,
+                    image: "assets/imagens/fitness-hamburguer-imagem.jpeg"
+                },
+
+                {
+                    name: "Clássico",
+                    description: "Pão brioche, carne, cheddar especial, cebola caramelizada e bacon triturado.",
+                    discount: 0,
+                    price: 29,
+                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                },
+
+                {
+                    name: "Cheddar",
+                    description: "Pão brioche, carne, creme de cheddar, cebola crispy, e bacon fatiado.",
+                    discount: 0,
+                    price: 25,
+                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                }
+
             ],
+
             "Combos": [
-                { name: "Combo 1", description: "Cheeseburger, batata e refrigerante", discount: 3, price: 20, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
+
+                {
+                    name: "Combo 1",
+                    description: "Cheeseburger, batata e refrigerante",
+                    discount: 0,
+                    price: 20,
+                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                }
+
             ],
+
             "Bebidas": [
-                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5.22, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" },
-                { name: "Refrigerante", description: "Lata 350ml", discount: 0, price: 5.45, image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg" }
-                
+
+                {
+                    name: "Refrigerante",
+                    description: "Lata 350ml",
+                    discount: 0,
+                    price: 5.22,
+                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                },
+
+                {
+                    name: "Refrigerante",
+                    description: "Lata 350ml",
+                    discount: 0,
+                    price: 5.45,
+                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                }
+
             ]
+
         };
 
         const menuDiv = document.getElementById('menu');
@@ -304,7 +212,7 @@
                     <div class="product-details">
                         <h3>${product.name}</h3>
                         <p>${product.description}</p>
-                        <p>R$ ${finalPrice.toFixed(2)}</p>
+                        <p>R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
                     </div>
                     <div class="product-actions">
                         <button onclick="addToBag('${product.name}', ${finalPrice})">Adicionar</button>
@@ -343,13 +251,13 @@
 
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    ${item.name} - R$ ${item.price.toFixed(2)}
+                    ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}
                     <button class="button-remover" onclick="removeFromBag(${index})">Remover</button>
                 `;
                 bagItems.appendChild(li);
             });
 
-            totalPriceElem.textContent = totalPrice.toFixed(2);
+            totalPriceElem.textContent = totalPrice.toFixed(2).replace('.', ',');
         }
 
         // Função para enviar o pedido via WhatsApp
@@ -358,30 +266,54 @@
             const customerAddress = document.getElementById('customer-address').value;
             const customerNumber = document.getElementById('customer-number').value;
             const customerBairro = document.getElementById('customer-bairro').value;
-            function updateBairroPrice() {
-    const bairroSelect = document.getElementById('customer-bairro');
-    const selectedBairro = bairroSelect.value;
-    const price = parseFloat(selectedBairro.split('-')[1]);
-
-    // Atualizar o preço total considerando o valor do bairro
-    totalPrice += price;
-    document.getElementById('total-price').textContent = totalPrice.toFixed(2);
-}
-
+            const trocoValue = document.getElementById('troco-valor').value;
 
             const orderDetails = `
                 *Nome do cliente:* ${customerName}
+
                 *Endereço:* ${customerAddress}, ${customerNumber}
+
                 *Bairro:* ${customerBairro}
-                *Itens adicionados:* ${bag.map(item => `${item.name} - *R$* ${item.price.toFixed(2)} - descrição ${item.description}`).join(', ')}
-                *Total: R$* ${totalPrice.toFixed(2)}  *+* *Bairro:* ${customerBairro}
+
+                *Itens adicionados:* ${bag.map(item => `${item.name} - *R$* ${item.price.toFixed(2).replace('.', ',')}`).join(', ')}
+
+                *Total: R$* ${totalPrice.toFixed(2).replace('.', ',')}  *+* *Bairro:* ${customerBairro}
+
+                ${document.getElementById('troco').checked ? `*Troco para:* R$ ${trocoValue.replace('.', ',')}` : ''}
+
             `;
 
-            const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)},`;
+            const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)}`;
             window.open(whatsappLink, '_blank');
+        }
+
+        function toggleTrocoInput() {
+            const trocoInput = document.getElementById('troco-valor');
+            trocoInput.style.display = document.getElementById('troco').checked ? 'block' : 'none';
+        }
+
+        function validateForm() {
+            const paymentOptions = document.querySelectorAll('input[name="payment-option"]:checked');
+            if (paymentOptions.length === 0) {
+                alert('Por favor, selecione pelo menos uma opção de pagamento.');
+                return false;
+            }
+            sendOrder();
+            return false; // Evita o envio do formulário padrão
+        }
+
+        function updateBairroPrice() {
+            const bairroSelect = document.getElementById('customer-bairro');
+            const selectedBairro = bairroSelect.value;
+            const price = parseFloat(selectedBairro.split('-')[1].replace(',', '.'));
+
+            // Atualizar o preço total considerando o valor do bairro
+            totalPrice += price;
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2).replace('.', ',');
         }
 
         updateBag(); // Atualizar a sacola ao carregar a página
     </script>
 </body>
+
 </html>

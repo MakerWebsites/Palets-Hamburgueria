@@ -1,0 +1,203 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffe6cc;
+    text-align: center; /* Centraliza o texto da página */
+}
+header {
+padding-top: 10px;
+    
+}
+header img {
+    width: 90px;
+    position: fixed;
+    left: 0px;
+    top: 3px;
+}
+#price-fixed {
+    border: solid 1px ;
+    box-shadow: 0px 0px 2px 1px black;
+    font-size: 14px;
+    position: fixed;
+    left: 15%;
+    top: 0px;
+    padding: 4px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background-color: #fe7700c6;
+    border-radius: 5px;
+    color: white;
+    text-shadow: 0px 1px 2px black;
+}
+
+.container {
+    background-image: url(assets/imagens/fundo-fast-food.png);
+    background-position: top;
+    background-repeat: repeat;
+    background-size: 300px;
+    margin: auto;
+    max-width: 1000px;
+    padding: 15px;
+
+}
+h1 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    background-color: #d35400b4;
+    border-radius: 8px;
+    padding: 3px;
+    margin-top: 40px;
+}
+.section h2 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    background-color: #d35400c4;
+    border-radius: 8px;
+    padding: 3px;
+}
+.product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.product img {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin-right: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Centraliza as imagens */
+}
+.product-details h3 {
+    margin: 0;
+    color: #d35400;
+}
+.product-details p {
+    margin: 5px 0;
+}
+.product-actions button {
+    background-color: #d35400;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 900;
+}
+.product-actions button:hover {
+    background-color: #febe00;
+}
+.bag {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+.bag h2 {
+    margin-top: 0;
+    color: #d35400;
+}
+.bag ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: end;
+}
+.bag ul li {
+    margin-bottom: 10px;
+}
+.bag ul li button {
+    margin-left: 10px;
+}
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+form input, form select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form button {
+    background-color: #d35400;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 50px;
+}
+form button:hover {
+    background-color: #e67e22;
+}
+footer {
+    position: fixed;
+    background-color: rgb(255, 123, 0);
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.button-remover {
+    background-color: red;
+    color: white;
+    border: none;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 900;
+    
+}
+.container h6 {
+    margin: 0;
+    padding-bottom: 60px;
+    padding-top: 10px;
+    letter-spacing: 1px;
+}
+mark {
+    padding: 0px 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #d35400;
+    margin: 2px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 20px;
+    text-shadow: 0px 2px 2px black;
+    border: solid 2px;
+    
+}
+@media (max-width: 600px) {
+    .product {
+        flex-direction: column;
+    }
+    .product-actions {
+        margin-top: 10px;
+    }
+}
