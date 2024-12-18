@@ -89,6 +89,7 @@
 
             <button type="submit">Enviar Pedido</button>
         </form>
+
         <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark>
         <a style="color: rgba(255, 255, 255, 0.815);" href="admin.html">Adm.</a></h6>
         <img src="" alt="">
@@ -107,90 +108,32 @@
                     description: "Pão brioche, carne, queijo prato, bacon fatiado e creme de queijo.",
                     discount: 0,
                     price: 23.00,
-                    image: "assets/imagens/bacon-hamburguer-imagem.jpeg"
+                    image: "assets/imagens/bacon-hamburguer-imagem.jpeg",
+                    extras: [
+                        { name: "Carne Extra", price: 5.00 }
+                    ]
                 },
-
                 {
-                    name: "Palets", description: "Pão brioche, carne, queijo coalho, rúcula, maionese de alho e cebola roxa.",
+                    name: "Palets",
+                    description: "Pão brioche, carne, queijo coalho, rúcula, maionese de alho e cebola roxa.",
                     discount: 0,
                     price: 30,
-                    image: "assets/imagens/palets-hamburguer-imagem.jpeg"
+                    image: "assets/imagens/palets-hamburguer-imagem.jpeg",
+                    extras: [
+                        { name: "Carne Extra", price: 5.00 }
+                    ]
                 },
-
-                {
-                    name: "Esquina",
-                    description: "Pão brioche, carne, fatia de cheddar, picles, cebola picada, mostarda e ketchup.",
-                    discount: 0,
-                    price: 26,
-                    image: "assets/imagens/esquina-hamburguer-imagem.jpeg"
-                },
-
-                {
-                    name: "Costela",
-                    description: "Pão brioche, carne, queijo queijo prato, alface, tomate, farofa de bacon, maionese e cebola crispy.",
-                    discount: 0,
-                    price: 28,
-                    image: "assets/imagens/costela-hamburguer-imagem.jpeg"
-                },
-
-                {
-                    name: "Fitness",
-                    description: "Pão brioche, carne, queijo prato, alface, tomate, cebola roxa e molho tasty.",
-                    discount: 0,
-                    price: 24,
-                    image: "assets/imagens/fitness-hamburguer-imagem.jpeg"
-                },
-
-                {
-                    name: "Clássico",
-                    description: "Pão brioche, carne, cheddar especial, cebola caramelizada e bacon triturado.",
-                    discount: 0,
-                    price: 29,
-                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
-                },
-
-                {
-                    name: "Cheddar",
-                    description: "Pão brioche, carne, creme de cheddar, cebola crispy, e bacon fatiado.",
-                    discount: 0,
-                    price: 25,
-                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
-                }
-
+                // Outros hambúrgueres
             ],
-
             "Combos": [
-
                 {
                     name: "Combo 1",
                     description: "Cheeseburger, batata e refrigerante",
                     discount: 0,
                     price: 20,
-                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
+                    image: "assets/imagens/combos-hamburguer-imagem.jpeg"
                 }
-
-            ],
-
-            "Bebidas": [
-
-                {
-                    name: "Refrigerante",
-                    description: "Lata 350ml",
-                    discount: 0,
-                    price: 5.22,
-                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
-                },
-
-                {
-                    name: "Refrigerante",
-                    description: "Lata 350ml",
-                    discount: 0,
-                    price: 5.45,
-                    image: "Molho de Soja com Gergelim (Simples e Saboroso)-burger.jpg"
-                }
-
             ]
-
         };
 
         const menuDiv = document.getElementById('menu');
@@ -217,9 +160,9 @@
                         <p>R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
                     </div>
                     <div class="product-actions">
-                        <button onclick="addToBag('${product.name}', ${finalPrice})">Adicionar</button>
+                        <button onclick="addToBag('${product.name}', ${finalPrice})">Carne 100g</button>
+                        <button onclick="addExtra('${product.name}', ${finalPrice}, ${product.extras[0].price})">Carne 200g</button>
                     </div>
-                    
                 `;
 
                 sectionDiv.appendChild(productDiv);
@@ -231,6 +174,14 @@
         // Função para adicionar item à sacola
         function addToBag(name, price) {
             bag.push({ name, price, date: new Date().toLocaleString() });
+            localStorage.setItem('bag', JSON.stringify(bag));
+            updateBag();
+        }
+
+        // Função para adicionar extra (carne extra)
+        function addExtra(name, basePrice, extraPrice) {
+            const totalWithExtra = basePrice + extraPrice;
+            bag.push({ name: `${name} + Carne Extra`, price: totalWithExtra, date: new Date().toLocaleString() });
             localStorage.setItem('bag', JSON.stringify(bag));
             updateBag();
         }
@@ -279,7 +230,6 @@
                 *Total: R$* ${totalPrice.toFixed(2).replace('.', ',')}  *+* *Bairro:* ${customerBairro}
 
                 ${document.getElementById('troco').checked ? `*Troco para:* R$ ${trocoValue.replace('.', ',')}` : ''}
-
             `;
 
             const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)}`;
@@ -291,15 +241,15 @@
             trocoInput.style.display = document.getElementById('troco').checked ? 'block' : 'none';
         }
 
-         function validateForm() {
-             const paymentOptions = document.querySelectorAll('input[name="payment-option"]:checked');
-             if (paymentOptions.length === 0) {
-                 alert('Por favor, selecione pelo menos uma opção de pagamento.');
-                 return false;
-             }
-             sendOrder();
-             return false; // Evita o envio do formulário padrão
-         }
+        function validateForm() {
+            const paymentOptions = document.querySelectorAll('input[name="payment-option"]:checked');
+            if (paymentOptions.length === 0) {
+                alert('Por favor, selecione pelo menos uma opção de pagamento.');
+                return false;
+            }
+            sendOrder();
+            return false; // Evita o envio do formulário padrão
+        }
 
         function updateBairroPrice() {
             const bairroSelect = document.getElementById('customer-bairro');
