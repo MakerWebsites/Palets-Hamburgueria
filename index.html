@@ -1,236 +1,254 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio - Hambúrgueria</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        .cardapio, .sacola {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .cardapio-item, .sacola-item {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 45%;
-            text-align: center;
-        }
-        .cardapio-item button, .sacola-item button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        .cardapio-item button:hover, .sacola-item button:hover {
-            background-color: #218838;
-        }
-        .sacola {
-            margin-top: 30px;
-        }
-        .total {
-            font-weight: bold;
-        }
-        .form-container {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .form-container button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Cardápio Digital</title>
 </head>
+
 <body>
+    <header>
+        <p id="price-fixed">Valor total R$ <span id="total-price">0,00</span> <mark>Palet's Burger</mark></p>
+    </header>
+    <div class="container">
+        <h1>Cardápio Digital</h1>
 
-<header>
-    <h1>Bem-vindo à nossa Hambúrgueria</h1>
-</header>
+        <div id="menu" class="menu"></div>
 
-<div class="container">
-    <h2>Cardápio</h2>
-    <div class="cardapio">
-        <div class="cardapio-item">
-            <h3>Burguer Clássico</h3>
-            <p>R$ 25,00</p>
-            <button onclick="addToBag('Burguer Clássico', 25)">Adicionar ao Carrinho</button>
+        <div class="bag">
+            <h2 id="sacola">Sua Sacola</h2>
+            <ul id="bag-items"></ul>
         </div>
-        <div class="cardapio-item">
-            <h3>Burguer Bacon</h3>
-            <p>R$ 30,00</p>
-            <button onclick="addToBag('Burguer Bacon', 30)">Adicionar ao Carrinho</button>
-        </div>
-        <div class="cardapio-item">
-            <h3>Burguer Vegano</h3>
-            <p>R$ 28,00</p>
-            <button onclick="addToBag('Burguer Vegano', 28)">Adicionar ao Carrinho</button>
-        </div>
-        <div class="cardapio-item">
-            <h3>Batata Frita</h3>
-            <p>R$ 12,00</p>
-            <button onclick="addToBag('Batata Frita', 12)">Adicionar ao Carrinho</button>
-        </div>
+
+        <form id="order-form" onsubmit="return validateForm()">
+            <h2>Finalizar Pedido</h2>
+            <label for="customer-name">Nome</label>
+            <input type="text" id="customer-name" placeholder="Seu nome" required>
+
+            <label for="customer-address">Endereço</label>
+            <input type="text" id="customer-address" placeholder="Seu endereço" required>
+
+            <label for="customer-number">Número</label>
+            <input type="text" id="customer-number" placeholder="Número da residência" required>
+
+            <label for="customer-bairro">Bairro e taxa entrega</label>
+            <select id="customer-bairro" required onchange="updateBairroPrice()">
+                <!-- Opções de bairros e taxas de entrega -->
+                <!-- Exemplo de opções -->
+                <option value="Centro-6,00">Centro - R$ 6,00</option>
+                <option value="Vila Louro-6,00">Vila Louro - R$ 6,00</option>
+                <option value="Florida 1-8,00">Florida 1 - R$ 8,00</option>
+                <!-- Adicione todas as outras opções aqui -->
+            </select>
+
+            <div>
+                <label> Cartão
+                    <input type="checkbox" name="payment-option" value="Cartão Crédito/Débito">
+                </label>
+                <label>Pix
+                    <input type="checkbox" name="payment-option" value="Pix">
+                </label>
+            </div>
+
+            <label for="troco">Dinheiro</label>
+            <input type="checkbox" id="troco" name="payment-option" onchange="toggleTrocoInput()">
+            <input type="number" id="troco-valor" placeholder="Valor para troco" style="display:none;">
+
+            <button type="submit">Enviar Pedido</button>
+            <button type="button" onclick="printOrder()">Imprimir Pedido</button>
+        </form>
+
+        <h6><mark>Palet's Burger&copy;</mark> todos os direitos reservados. Desenvolvido por <mark>Antolin Junior</mark>
+        <a style="color: rgba(255, 255, 255, 0.815);" href="admin.html">Adm.</a></h6>
+        <img src="" alt="">
     </div>
+    <footer>
+        <a style="text-decoration: none; color: white;" href="#sacola"><i style="font-size: 20px;" class="fas fa-shopping-basket"></i> Sacola</a>
+        <a style="text-decoration: none; color: white;" href="#order-form"><i style="font-size: 20px;" class="fas fa-map-marker-alt"></i> Cadastro de Entrega
+        </a>
+    </footer>
 
-    <div class="sacola">
-        <h2>Sacola de Compras</h2>
-        <ul id="bag-items"></ul>
-        <p class="total">Total: R$ <span id="total-price">0,00</span></p>
-    </div>
+    <script>
+        const menuData = {
+            "Hambúrgueres": [
+                {
+                    name: "Bacon",
+                    description: "Pão brioche, carne, queijo prato, bacon fatiado e creme de queijo.",
+                    discount: 0,
+                    price: 23.00,
+                    image: "assets/imagens/bacon-hamburguer-imagem.jpeg",
+                    extras: [
+                        { name: "Carne Extra", price: 5.00 }
+                    ]
+                },
+                {
+                    name: "Palets",
+                    description: "Pão brioche, carne, queijo coalho, rúcula, maionese de alho e cebola roxa.",
+                    discount: 0,
+                    price: 30,
+                    image: "assets/imagens/palets-hamburguer-imagem.jpeg",
+                    extras: [
+                        { name: "Carne Extra", price: 5.00 }
+                    ]
+                }
+            ],
+            "Combos": [
+                {
+                    name: "Combo 1",
+                    description: "Cheeseburger, batata e refrigerante",
+                    discount: 0,
+                    price: 20,
+                    image: "assets/imagens/combos-hamburguer-imagem.jpeg"
+                }
+            ]
+        };
 
-    <div class="form-container">
-        <h2>Formulário de Pedido</h2>
-        <input type="text" id="customer-name" placeholder="Nome" required>
-        <input type="text" id="customer-address" placeholder="Endereço" required>
-        <input type="text" id="customer-number" placeholder="Número" required>
-        <input type="text" id="customer-bairro" placeholder="Bairro" required>
-        <button onclick="sendOrder()">Enviar Pedido</button>
-    </div>
-</div>
+        const menuDiv = document.getElementById('menu');
+        const bag = JSON.parse(localStorage.getItem('bag')) || [];
+        let totalPrice = 0;
 
-<script>
-    let totalPrice = 0;
-    const bag = JSON.parse(localStorage.getItem('bag')) || [];
+        // Exibir menu de produtos
+        for (const [section, products] of Object.entries(menuData)) {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.classList.add('section');
+            sectionDiv.innerHTML = `<h2>${section}</h2>`;
 
-    // Função para conectar à impressora via Bluetooth
-    async function connectToPrinter() {
-        try {
-            const device = await navigator.bluetooth.requestDevice({
-                filters: [{ services: ['printer'] }] // Filtro para dispositivos com serviço de impressão
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                const finalPrice = product.price - product.discount;
+
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-details">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p>R$ ${finalPrice.toFixed(2).replace('.', ',')}</p>
+                    </div>
+                    <div class="product-actions">
+                        <button onclick="addToBag('${product.name}', ${finalPrice})">Carne 100g</button>
+                        <button onclick="addExtra('${product.name}', ${finalPrice}, ${product.extras[0].price})">Carne 200g</button>
+                    </div>
+                `;
+
+                sectionDiv.appendChild(productDiv);
             });
 
-            const server = await device.gatt.connect();
-            console.log('Conectado à impressora:', device.name);
-
-            const service = await server.getPrimaryService('printer');
-            const characteristic = await service.getCharacteristic('write'); // Pode precisar ajustar o 'write' para o tipo correto
-
-            let orderDetails = `
-                Nome: ${document.getElementById('customer-name').value}
-                Endereço: ${document.getElementById('customer-address').value}
-                Itens: ${bag.map(item => `${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}`).join(', ')}
-                Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}
-            `;
-
-            const encoder = new TextEncoder();
-            const data = encoder.encode(orderDetails);
-            await characteristic.writeValue(data);
-            console.log('Pedido enviado para impressão');
-            
-            const cutCommand = new TextEncoder().encode('\x1D\x56\x00'); // Exemplo de comando de corte de papel
-            await characteristic.writeValue(cutCommand);
-
-        } catch (error) {
-            console.error('Erro ao conectar com a impressora Bluetooth:', error);
+            menuDiv.appendChild(sectionDiv);
         }
-    }
 
-    // Função para imprimir o pedido
-    function printOrder() {
-        connectToPrinter();
-    }
+        // Função para adicionar item à sacola
+        function addToBag(name, price) {
+            bag.push({ name, price, date: new Date().toLocaleString() });
+            localStorage.setItem('bag', JSON.stringify(bag));
+            updateBag();
+        }
 
-    // Função para enviar o pedido via WhatsApp
-    function sendOrder() {
-        const customerName = document.getElementById('customer-name').value;
-        const customerAddress = document.getElementById('customer-address').value;
-        const customerNumber = document.getElementById('customer-number').value;
-        const customerBairro = document.getElementById('customer-bairro').value;
+        // Função para adicionar extra (carne extra)
+        function addExtra(name, basePrice, extraPrice) {
+            const totalWithExtra = basePrice + extraPrice;
+            bag.push({ name: `${name} + Carne Extra`, price: totalWithExtra, date: new Date().toLocaleString() });
+            localStorage.setItem('bag', JSON.stringify(bag));
+            updateBag();
+        }
 
-        const orderDetails = `
-            Nome: ${customerName}
-            Endereço: ${customerAddress}, ${customerNumber}
-            Bairro: ${customerBairro}
-            Itens: ${bag.map(item => `${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}`).join(', ')}
-            Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}
-        `;
+        // Função para remover item da sacola
+        function removeFromBag(index) {
+            bag.splice(index, 1); // Remove da sacola
+            localStorage.setItem('bag', JSON.stringify(bag));
+            updateBag();
+        }
 
-        printOrder(); // Envia para a impressora automaticamente
+        // Atualizar a sacola
+        function updateBag() {
+            const bagItems = document.getElementById('bag-items');
+            const totalPriceElem = document.getElementById('total-price');
+            bagItems.innerHTML = '';
+            totalPrice = 0;
 
-        const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)}`;
-        window.open(whatsappLink, '_blank');
-    }
+            bag.forEach((item, index) => {
+                totalPrice += item.price;
 
-    // Função para adicionar item à sacola
-    function addToBag(name, price) {
-        const item = { name, price };
-        bag.push(item);
-        localStorage.setItem('bag', JSON.stringify(bag));
-        updateBag();
-    }
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}
+                    <button class="button-remover" onclick="removeFromBag(${index})">Remover</button>
+                `;
+                bagItems.appendChild(li);
+            });
 
-    // Função para atualizar a sacola
-    function updateBag() {
-        const bagItems = document.getElementById('bag-items');
-        const totalPriceElem = document.getElementById('total-price');
-        bagItems.innerHTML = '';
-        totalPrice = 0;
+            totalPriceElem.textContent = totalPrice.toFixed(2).replace('.', ',');
+        }
 
-        bag.forEach((item, index) => {
-            totalPrice += item.price;
+        // Função para enviar o pedido via WhatsApp
+        function sendOrder() {
+            const customerName = document.getElementById('customer-name').value;
+            const customerAddress = document.getElementById('customer-address').value;
+            const customerNumber = document.getElementById('customer-number').value;
+            const customerBairro = document.getElementById('customer-bairro').value;
+            const trocoValue = document.getElementById('troco-valor').value;
 
-            const li = document.createElement('li');
-            li.classList.add('sacola-item');
-            li.innerHTML = `
-                ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}
-                <button onclick="removeFromBag(${index})">Remover</button>
+            const orderDetails = `
+                *Nome do cliente:* ${customerName}
+                *Endereço:* ${customerAddress}, ${customerNumber}
+                *Bairro:* ${customerBairro}
+                *Itens adicionados:* ${bag.map(item => `${item.name} - *R$* ${item.price.toFixed(2).replace('.', ',')}`).join(', ')}
+                *Total: R$* ${totalPrice.toFixed(2).replace('.', ',')}  *+* *Bairro:* ${customerBairro}
+
+                ${document.getElementById('troco').checked ? `*Troco para:* R$ ${trocoValue.replace('.', ',')}` : ''}
             `;
-            bagItems.appendChild(li);
-        });
 
-        totalPriceElem.textContent = totalPrice.toFixed(2).replace('.', ',');
-    }
+            const whatsappLink = `https://wa.me/5511968559541?text=${encodeURIComponent(orderDetails)}`;
+            window.open(whatsappLink, '_blank');
+        }
 
-    // Função para remover item da sacola
-    function removeFromBag(index) {
-        bag.splice(index, 1); // Remove da sacola
-        localStorage.setItem('bag', JSON.stringify(bag));
+        // Função para imprimir o pedido na impressora
+        async function printOrder() {
+            try {
+                // Tentar encontrar dispositivos com o serviço SPP (Serial Port Profile), muito utilizado para impressoras
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: ['00001101-0000-1000-8000-00805f9b34fb'] }] // UUID para SPP
+                });
+
+                const server = await device.gatt.connect();
+                console.log('Conectado à impressora:', device.name);
+
+                // Usando o UUID para o serviço SPP
+                const service = await server.getPrimaryService('00001101-0000-1000-8000-00805f9b34fb');
+                const characteristic = await service.getCharacteristic('write'); // Certifique-se de que a impressora tem essa característica
+
+                // Comando de impressão
+                let orderDetails = `
+                    \x1B\x21\x01 Nome: ${document.getElementById('customer-name').value} 
+                    \x1B\x21\x00 Endereço: ${document.getElementById('customer-address').value}
+                    Número: ${document.getElementById('customer-number').value}
+                    Bairro: ${document.getElementById('customer-bairro').value}
+                    Itens: ${bag.map(item => `${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}`).join(', ')}
+                    Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}
+                    \x1D\x56\x00
+                `;
+
+                const encoder = new TextEncoder();
+                const data = encoder.encode(orderDetails);
+                await characteristic.writeValue(data);
+                console.log('Pedido enviado para impressão');
+                
+                // Comando de corte
+                const cutCommand = new TextEncoder().encode('\x1D\x56\x00'); // Comando de corte
+                await characteristic.writeValue(cutCommand);
+
+            } catch (error) {
+                console.error('Erro ao conectar com a impressora Bluetooth:', error);
+            }
+        }
+
+        // Inicializar a sacola
         updateBag();
-    }
-
-    updateBag(); // Atualizar a sacola ao carregar a página
-</script>
-
+    </script>
 </body>
+
 </html>
